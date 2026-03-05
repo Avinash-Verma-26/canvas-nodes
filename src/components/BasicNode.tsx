@@ -1,27 +1,21 @@
-import type { CanvasNode } from "../App";
+import type { ModelNode } from "../App";
 
 type BasicNodeProps = {
-  nodeData: CanvasNode;
-  onDragStart: (
-    node: CanvasNode,
-    e: React.PointerEvent<HTMLDivElement>,
-  ) => void;
+  node: ModelNode;
+  onMoveStart: any;
 };
 
-const BasicNode = ({ nodeData, onDragStart }: BasicNodeProps) => {
+const BasicNode = ({ node, onMoveStart }: BasicNodeProps) => {
   return (
     <div
-      onPointerDown={(e) => onDragStart(nodeData, e)}
       className="node"
-      style={{
-        position: "absolute",
-        width: nodeData.width,
-        height: nodeData.height,
-        top: nodeData.y,
-        left: nodeData.x,
-        backgroundColor: nodeData.color,
-      }}
-    />
+      style={{ top: node.position.y, left: node.position.x }}
+      onPointerDown={(e) => onMoveStart(e, node)}
+    >
+      <p>{node.id}</p>
+      <p>{node.position.x}</p>
+      <p>{node.position.y}</p>
+    </div>
   );
 };
 
